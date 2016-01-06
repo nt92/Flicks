@@ -33,11 +33,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         cell.overviewLabel.text = overview
         
+<<<<<<< HEAD
         let baseUrl = "http://image.tmdb.org/t/p/w500"
         let posterPath = movie["poster_path"] as! String
         let imageUrl = NSURL(string: baseUrl + posterPath)
         
         
+=======
+>>>>>>> 8e5bbc880559f5075bc0fea177b632cb050b2fc7
         return cell
     }
     
