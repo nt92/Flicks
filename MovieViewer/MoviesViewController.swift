@@ -38,7 +38,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let imageUrl = NSURL(string: baseUrl + posterPath)
         
         
-        
         return cell
     }
     
