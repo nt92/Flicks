@@ -26,42 +26,30 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="32B-UW-Huk">
-<<<<<<< HEAD
                                                     <rect key="frame" x="94" y="0.0" width="213" height="21"/>
-=======
                                                     <rect key="frame" x="8" y="0.0" width="242" height="21"/>
->>>>>>> 8e5bbc880559f5075bc0fea177b632cb050b2fc7
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PrQ-V3-bKN">
-<<<<<<< HEAD
                                                     <rect key="frame" x="94" y="29" width="218" height="74"/>
-=======
                                                     <rect key="frame" x="8" y="30" width="304" height="74"/>
->>>>>>> 8e5bbc880559f5075bc0fea177b632cb050b2fc7
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-<<<<<<< HEAD
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="dGc-XF-kH6">
                                                     <rect key="frame" x="0.0" y="-17" width="86" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-=======
->>>>>>> 8e5bbc880559f5075bc0fea177b632cb050b2fc7
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="overviewLabel" destination="PrQ-V3-bKN" id="WP7-QY-W5a"/>
-<<<<<<< HEAD
                                             <outlet property="posterView" destination="dGc-XF-kH6" id="Iru-EP-zbO"/>
-=======
->>>>>>> 8e5bbc880559f5075bc0fea177b632cb050b2fc7
                                             <outlet property="titleLabel" destination="32B-UW-Huk" id="BOc-Bg-1Fb"/>
                                         </connections>
                                     </tableViewCell>
