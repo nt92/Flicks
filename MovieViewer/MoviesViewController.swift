@@ -16,6 +16,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var networkErrorMEssage: UIView!
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if let movies = movies{
             return movies.count
@@ -76,13 +78,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
                             NSLog("response: \(responseDictionary)")
-                            self.movies = responseDictionary["results"] as! [NSDictionary]
+                            self.movies = responseDictionary["results"] as? [NSDictionary]
                             self.tableView.reloadData()
                             EZLoadingActivity.hide(success: true, animated: true)
+                            self.networkErrorMEssage.hidden = true
                     }
                 }
                 else{
                     EZLoadingActivity.hide(success: false, animated: true)
+                    self.networkErrorMEssage.hidden = false
                 }
         });
         task.resume()
@@ -92,6 +96,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidAppear(animated: Bool) {
         EZLoadingActivity.show("Loading...", disableUI: true)
+        networkErrorMEssage.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -112,6 +117,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         delay(2, closure: {
             self.refreshControl.endRefreshing()
         })
+        networkErrorMEssage.hidden = true
     }
     
 
