@@ -10,15 +10,15 @@ import UIKit
 import AFNetworking
 import EZLoadingActivity
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MoviesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
     var refreshControl: UIRefreshControl!
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
-    @IBOutlet weak var networkErrorMEssage: UIView!
+    let searchController = UISearchController(searchResultsController: nil)
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         if let movies = movies{
             return movies.count
         }
@@ -26,28 +26,19 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             return 0
         }
     }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionMovieCell", forIndexPath: indexPath) as! CollectionMovieCell
         
         let movie = movies![indexPath.row]
-        let title = movie["title"] as! String
-        
-        cell.titleLabel.text = title
-        
-        let overview = movie["overview"] as! String
-        
-        cell.overviewLabel.text = overview
-        
         let baseUrl = "http://image.tmdb.org/t/p/w500"
         let posterPath = movie["poster_path"] as! String
         let imageUrl = NSURL(string: baseUrl + posterPath)
         
-        cell.posterView.setImageWithURL(imageUrl!)
-        
+        cell.posterImage.setImageWithURL(imageUrl!)
         
         return cell
     }
+    
     
     var movies: [NSDictionary]?
     
@@ -56,10 +47,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
-        tableView.insertSubview(refreshControl, atIndex: 0)
+        collectionView.insertSubview(refreshControl, atIndex: 0)
         
-        tableView.dataSource = self
-        tableView.delegate = self
+        collectionView.dataSource = self
+        collectionView.delegate = self
         
         EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 2)
         
@@ -79,24 +70,19 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                         data, options:[]) as? NSDictionary {
                             NSLog("response: \(responseDictionary)")
                             self.movies = responseDictionary["results"] as? [NSDictionary]
-                            self.tableView.reloadData()
+                            self.collectionView.reloadData()
                             EZLoadingActivity.hide(success: true, animated: true)
-                            self.networkErrorMEssage.hidden = true
                     }
                 }
                 else{
                     EZLoadingActivity.hide(success: false, animated: true)
-                    self.networkErrorMEssage.hidden = false
                 }
         });
         task.resume()
-        
-        //EZLoadingActivity.hide()
     }
     
     override func viewDidAppear(animated: Bool) {
         EZLoadingActivity.show("Loading...", disableUI: true)
-        networkErrorMEssage.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -117,10 +103,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         delay(2, closure: {
             self.refreshControl.endRefreshing()
         })
-        networkErrorMEssage.hidden = true
     }
-    
-
     /*
     // MARK: - Navigation
 
