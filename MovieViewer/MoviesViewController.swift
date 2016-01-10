@@ -19,6 +19,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     let searchController = UISearchController(searchResultsController: nil)
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1)
         if let movies = movies{
             return movies.count
         }
@@ -52,8 +53,6 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 2)
-        
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
@@ -68,7 +67,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
                 if let data = dataOrNil {
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
-                            NSLog("response: \(responseDictionary)")
+                            //NSLog("response: \(responseDictionary)")
                             self.movies = responseDictionary["results"] as? [NSDictionary]
                             self.collectionView.reloadData()
                             EZLoadingActivity.hide(success: true, animated: true)
@@ -82,7 +81,6 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     override func viewDidAppear(animated: Bool) {
-        EZLoadingActivity.show("Loading...", disableUI: true)
     }
 
     override func didReceiveMemoryWarning() {
