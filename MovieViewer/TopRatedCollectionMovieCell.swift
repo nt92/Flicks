@@ -9,6 +9,7 @@
 import UIKit
 
 class TopRatedCollectionMovieCell: UICollectionViewCell {
+    
     @IBOutlet weak var posterImage: UIImageView!
     
 }
