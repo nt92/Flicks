@@ -10,8 +10,8 @@ import UIKit
 import AFNetworking
 import EZLoadingActivity
 
-class MoviesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-
+class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    
     var refreshControl: UIRefreshControl!
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -27,7 +27,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionMovieCell", forIndexPath: indexPath) as! CollectionMovieCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TopRatedCollectionMovieCell", forIndexPath: indexPath) as! TopRatedCollectionMovieCell
         
         let movie = movies![indexPath.row]
         let baseUrl = "http://image.tmdb.org/t/p/w500"
@@ -35,7 +35,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         let imageUrl = NSURL(string: baseUrl + posterPath)
         
         cell.posterImage.setImageWithURL(imageUrl!)
-        
+
         return cell
     }
     
@@ -84,7 +84,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     override func viewDidAppear(animated: Bool) {
         EZLoadingActivity.show("Loading...", disableUI: true)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -107,12 +107,12 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
