@@ -35,7 +35,14 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         let posterPath = movie["poster_path"] as! String
         let imageUrl = NSURL(string: baseUrl + posterPath)
         
-        cell.posterImage.setImageWithURL(imageUrl!)
+        cell.posterImage.setImageWithURLRequest(NSURLRequest(URL: imageUrl!), placeholderImage: nil, success: { (request, response, image) in
+            cell.posterImage.alpha = 0.0
+            cell.posterImage.image = image
+            
+            UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                cell.posterImage.alpha = 1.0
+                }, completion: nil)
+            }, failure: nil)
         
         return cell
     }

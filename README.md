@@ -17,14 +17,14 @@ The following **optional** features are implemented:
 
 - [ ] User sees an error message when there's a networking error. 
 - [x] Movies are displayed using a CollectionView instead of a TableView.
-- [ ] User can select from a tab bar for either "Now Playing" or "Top Rated" movies.
+- [x] User can select from a tab bar for either "Now Playing" or "Top Rated" movies.
 - [ ] User can search for a movie.
-- [ ] All images fade in as they are loading.
+- [x] All images fade in as they are loading.
 - [ ] Customize the UI.
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [ ] Uses AutoLayout
 
 ## Video Walkthrough 
 
