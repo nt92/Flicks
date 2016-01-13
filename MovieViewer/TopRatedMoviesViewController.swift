@@ -19,6 +19,7 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
     let searchController = UISearchController(searchResultsController: nil)
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+        
         EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1)
         if let movies = movies{
             return movies.count
@@ -60,6 +61,11 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        networkRequest()
+      
+    }
+    
+    func networkRequest(){
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string:"https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
@@ -86,6 +92,7 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
         });
         task.resume()
     }
+
     
     override func viewDidAppear(animated: Bool) {
     }
@@ -107,7 +114,7 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
     func onRefresh() {
         delay(1, closure: {
             self.refreshControl.endRefreshing()
-            self.collectionView.reloadData()
+            self.networkRequest()
         })
     }
     /*

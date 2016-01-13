@@ -19,6 +19,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     let searchController = UISearchController(searchResultsController: nil)
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+        
         EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1)
         if let movies = movies{
             return movies.count
@@ -60,8 +61,12 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        networkRequest()
+    }
+    
+    func networkRequest(){
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string:"https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
         let session = NSURLSession(
             configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
@@ -107,7 +112,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     func onRefresh() {
         delay(2, closure: {
             self.refreshControl.endRefreshing()
-            self.collectionView.reloadData()
+            self.networkRequest()
         })
     }
     /*
