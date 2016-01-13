@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="vaY-Er-a0U">
-                                <rect key="frame" x="0.0" y="42" width="320" height="469"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mK9-lS-pRU">
                                     <size key="itemSize" width="155" height="159"/>
@@ -24,7 +24,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TopRatedCollectionMovieCell" id="pGp-WE-DpC" customClass="TopRatedCollectionMovieCell" customModule="MovieViewer" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="155" height="159"/>
+                                        <rect key="frame" x="0.0" y="64" width="155" height="159"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="155" height="159"/>
@@ -39,6 +39,7 @@
                                         </view>
                                         <connections>
                                             <outlet property="posterImage" destination="qdv-n7-J2M" id="Kng-ec-foq"/>
+                                            <segue destination="zh2-MX-YbR" kind="push" id="5A0-gw-PGd"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -46,14 +47,29 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Top Rated" id="c0f-xy-log"/>
+                    <navigationItem key="navigationItem" title="Top Rated" id="cx9-MK-mvr"/>
                     <connections>
                         <outlet property="collectionView" destination="vaY-Er-a0U" id="awp-oP-uVH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytK-Wp-kOQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="283" y="73"/>
+            <point key="canvasLocation" x="815" y="73"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="rF5-ym-b2q">
+            <objects>
+                <viewController id="zh2-MX-YbR" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eg5-CG-Jli">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="l2L-qb-rrl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hdc-oR-Px0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1206" y="79"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="PoP-Sq-7VH">
@@ -65,8 +81,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="mRf-dx-6Qh"/>
-                        <segue destination="hvK-ds-z0s" kind="relationship" relationship="viewControllers" id="cUL-Gc-mDh"/>
+                        <segue destination="QKp-YN-Sbb" kind="relationship" relationship="viewControllers" id="mRf-dx-6Qh"/>
+                        <segue destination="d5f-bM-kpY" kind="relationship" relationship="viewControllers" id="cUL-Gc-mDh"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9x0-fb-E4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -82,7 +98,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="zQU-tU-p2p">
-                                <rect key="frame" x="0.0" y="39" width="320" height="469"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="99M-EA-sHu">
                                     <size key="itemSize" width="155" height="159"/>
@@ -92,7 +108,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionMovieCell" id="gE0-no-HhX" customClass="CollectionMovieCell" customModule="MovieViewer" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="155" height="159"/>
+                                        <rect key="frame" x="0.0" y="64" width="155" height="159"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="155" height="159"/>
@@ -107,6 +123,7 @@
                                         </view>
                                         <connections>
                                             <outlet property="posterImage" destination="Uyi-Hc-I3j" id="f42-Xo-YNh"/>
+                                            <segue destination="gVI-Kp-ZTU" kind="push" id="OPW-pb-XJ6"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -114,7 +131,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Now Playing" id="QJA-hM-RZI"/>
+                    <navigationItem key="navigationItem" title="Now Playing" id="NbL-Su-UOW"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="zQU-tU-p2p" id="UH5-fZ-G1X"/>
@@ -122,7 +139,60 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="732" y="-573"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="kTt-EV-DBf">
+            <objects>
+                <viewController id="gVI-Kp-ZTU" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xx7-CI-0X7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="N0e-BF-2pe"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MrU-Zt-3ro" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1124" y="-573"/>
+        </scene>
+        <!--Now Playing-->
+        <scene sceneID="ghg-sM-h1Y">
+            <objects>
+                <navigationController title="Now Playing" automaticallyAdjustsScrollViewInsets="NO" id="QKp-YN-Sbb" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Now Playing" id="QJA-hM-RZI"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="RwR-Mx-pmm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="bJ8-VF-XKd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LnW-8N-QkS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="200" y="-573"/>
+        </scene>
+        <!--Top Rated-->
+        <scene sceneID="8Vw-jj-cNx">
+            <objects>
+                <navigationController title="Top Rated" automaticallyAdjustsScrollViewInsets="NO" id="d5f-bM-kpY" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Top Rated" id="c0f-xy-log"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qz3-py-z31">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="hvK-ds-z0s" kind="relationship" relationship="rootViewController" id="KOB-MH-1Ps"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PFd-1s-wpQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="283" y="73"/>
         </scene>
     </scenes>
 </document>
