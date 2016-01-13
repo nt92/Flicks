@@ -32,18 +32,22 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TopRatedCollectionMovieCell", forIndexPath: indexPath) as! TopRatedCollectionMovieCell
         
         let movie = movies![indexPath.row]
-        let baseUrl = "http://image.tmdb.org/t/p/w500"
-        let posterPath = movie["poster_path"] as! String
-        let imageUrl = NSURL(string: baseUrl + posterPath)
         
-        cell.posterImage.setImageWithURLRequest(NSURLRequest(URL: imageUrl!), placeholderImage: nil, success: { (request, response, image) in
-            cell.posterImage.alpha = 0.0
-            cell.posterImage.image = image
+        let baseUrl = "http://image.tmdb.org/t/p/w500"
+        
+        if let posterPath = movie["poster_path"] as? String{
+            let imageUrl = NSURL(string: baseUrl + posterPath)
             
-            UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                cell.posterImage.alpha = 1.0
-                }, completion: nil)
-            }, failure: nil)
+            cell.posterImage.setImageWithURLRequest(NSURLRequest(URL: imageUrl!), placeholderImage: nil, success: { (request, response, image) in
+                cell.posterImage.alpha = 0.0
+                cell.posterImage.image = image
+                
+                UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                    cell.posterImage.alpha = 1.0
+                    }, completion: nil)
+                }, failure: nil)
+        }
+
 
         return cell
     }
@@ -117,14 +121,22 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
             self.networkRequest()
         })
     }
-    /*
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let cell = sender as! UICollectionViewCell
+        let indexPath = collectionView.indexPathForCell(cell)
+        let movie = movies![indexPath!.row]
+        
+        let detailViewController = segue.destinationViewController as! DetailedTopRatedController
+        detailViewController.movie = movie
+        
     // Get the new view controller using segue.destinationViewController.
     // Pass the selected object to the new view controller.
     }
-    */
+    
     
 }
