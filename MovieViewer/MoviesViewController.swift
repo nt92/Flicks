@@ -50,6 +50,14 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath){
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)
+        cell?.alpha = 0.5
+    }
+    func collectionView(collectionView: UICollectionView, didUnhighlightItemAtIndexPath indexPath: NSIndexPath){
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)
+        cell?.alpha = 1.0
+    }
     
     var movies: [NSDictionary]?
     
