@@ -10,19 +10,21 @@ import UIKit
 import AFNetworking
 import EZLoadingActivity
 
-class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
     
     var refreshControl: UIRefreshControl!
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    var movies: [NSDictionary]?
+    var filteredMovies: [NSDictionary]?
     
     let searchController = UISearchController(searchResultsController: nil)
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
-        
-        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1)
-        if let movies = movies{
-            return movies.count
+        if let filteredMovies = filteredMovies{
+            return filteredMovies.count
         }
         else{
             return 0
@@ -31,7 +33,7 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TopRatedCollectionMovieCell", forIndexPath: indexPath) as! TopRatedCollectionMovieCell
         
-        let movie = movies![indexPath.row]
+        let movie = filteredMovies![indexPath.item]
         
         let baseUrl = "http://image.tmdb.org/t/p/w500"
         
@@ -61,9 +63,6 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
         cell?.alpha = 1.0
     }
     
-    
-    var movies: [NSDictionary]?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,11 +73,14 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        searchBar.delegate = self
+        
         networkRequest()
       
     }
     
     func networkRequest(){
+        EZLoadingActivity.show("Loading...", disableUI: true)
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string:"https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
@@ -95,6 +97,7 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
                         data, options:[]) as? NSDictionary {
                             //NSLog("response: \(responseDictionary)")
                             self.movies = responseDictionary["results"] as? [NSDictionary]
+                            self.filteredMovies = self.movies
                             self.collectionView.reloadData()
                             EZLoadingActivity.hide(success: true, animated: true)
                     }
@@ -129,6 +132,25 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
             self.refreshControl.endRefreshing()
             self.networkRequest()
         })
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredMovies = movies
+        } else {
+            filteredMovies = movies?.filter({ (movie: NSDictionary) -> Bool in
+                if let title = movie["title"] as? String {
+                    if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
+                        
+                        return  true
+                    } else {
+                        return false
+                    }
+                }
+                return false
+            })
+        }
+        collectionView.reloadData()
     }
     
     // MARK: - Navigation
