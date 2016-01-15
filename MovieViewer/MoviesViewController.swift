@@ -10,19 +10,19 @@ import UIKit
 import AFNetworking
 import EZLoadingActivity
 
-class MoviesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class MoviesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
 
     var refreshControl: UIRefreshControl!
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
-    let searchController = UISearchController(searchResultsController: nil)
+    var movies: [NSDictionary]?
+    var filteredMovies: [NSDictionary]?
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
-        
-        EZLoadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 1)
-        if let movies = movies{
-            return movies.count
+        if let filteredMovies = filteredMovies{
+            return filteredMovies.count
         }
         else{
             return 0
@@ -31,20 +31,27 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionMovieCell", forIndexPath: indexPath) as! CollectionMovieCell
         
-        let movie = movies![indexPath.row]
+        let movie = filteredMovies![indexPath.item]
         let baseUrl = "http://image.tmdb.org/t/p/w500"
         
-        if let posterPath = movie["poster_path"] as? String{
-            let imageUrl = NSURL(string: baseUrl + posterPath)
-        
-            cell.posterImage.setImageWithURLRequest(NSURLRequest(URL: imageUrl!), placeholderImage: nil, success: { (request, response, image) in
-            cell.posterImage.alpha = 0.0
-            cell.posterImage.image = image
+        if let posterPath = movie["poster_path"] as? String {
+            let posterURL = NSURL(string: baseUrl + posterPath)
             
-            UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                cell.posterImage.alpha = 1.0
-                }, completion: nil)
-            }, failure: nil)
+            let urlRequest = NSURLRequest(URL: posterURL!)
+            
+            cell.posterImage.setImageWithURLRequest(urlRequest, placeholderImage: nil, success: { (request: NSURLRequest, response: NSHTTPURLResponse?, image: UIImage) -> Void in
+                if response != nil {
+                    cell.posterImage.alpha = 0
+                    cell.posterImage.image = image
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        cell.posterImage.alpha = 1
+                    })
+                } else {
+                    cell.posterImage.image = image
+                }
+                
+                }, failure: { (request: NSURLRequest, response: NSHTTPURLResponse?, error: NSError) -> Void in
+            })
         }
         
         return cell
@@ -59,8 +66,6 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         cell?.alpha = 1.0
     }
     
-    var movies: [NSDictionary]?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,10 +76,14 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        searchBar.delegate = self
+        
         networkRequest()
     }
     
     func networkRequest(){
+        EZLoadingActivity.show("Loading...", disableUI: true)
+        
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
         let request = NSURLRequest(URL: url!)
@@ -91,6 +100,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
                         data, options:[]) as? NSDictionary {
                             //NSLog("response: \(responseDictionary)")
                             self.movies = responseDictionary["results"] as? [NSDictionary]
+                            self.filteredMovies = self.movies
                             self.collectionView.reloadData()
                             EZLoadingActivity.hide(success: true, animated: true)
                     }
@@ -124,6 +134,25 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
             self.refreshControl.endRefreshing()
             self.networkRequest()
         })
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredMovies = movies
+        } else {
+            filteredMovies = movies?.filter({ (movie: NSDictionary) -> Bool in
+                if let title = movie["title"] as? String {
+                    if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
+                        
+                        return  true
+                    } else {
+                        return false
+                    }
+                }
+                return false
+            })
+        }
+        collectionView.reloadData()
     }
     
     // MARK: - Navigation

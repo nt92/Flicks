@@ -20,7 +20,7 @@ The following **optional** features are implemented:
 
 - [ ] User sees an error message when there's a networking error. 
 - [x] Movies are displayed using a CollectionView instead of a TableView.
-- [ ] User can search for a movie.
+- [x] User can search for a movie.
 - [x] All images fade in as they are loading.
 - [ ] Customize the UI.
 - [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
