@@ -2,7 +2,7 @@
 
 **Movie Viewer** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **12** hours spent in total
+Time spent: **14** hours spent in total
 
 ## User Stories
 
@@ -28,13 +28,11 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] Uses AutoLayout
-
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='MovieViewerGIF1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='MovieViewerGIF2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

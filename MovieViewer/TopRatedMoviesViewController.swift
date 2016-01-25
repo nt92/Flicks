@@ -16,6 +16,7 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var networkErrorView: UIView!
     
     var movies: [NSDictionary]?
     var filteredMovies: [NSDictionary]?
@@ -69,6 +70,7 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        networkErrorView.hidden = true
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
@@ -104,10 +106,12 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
                             self.filteredMovies = self.movies
                             self.collectionView.reloadData()
                             EZLoadingActivity.hide(success: true, animated: true)
+                            networkErrorView.hidden = true
                     }
                 }
                 else{
                     EZLoadingActivity.hide(success: false, animated: true)
+                    networkErrorView.hidden = false
                 }
         });
         task.resume()
