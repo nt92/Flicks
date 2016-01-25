@@ -16,6 +16,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var networkErrorView: UIView!
     
     var movies: [NSDictionary]?
     var filteredMovies: [NSDictionary]?
@@ -69,6 +70,8 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        networkErrorView.hidden = true
+        
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         collectionView.insertSubview(refreshControl, atIndex: 0)
@@ -103,14 +106,17 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
                             self.filteredMovies = self.movies
                             self.collectionView.reloadData()
                             EZLoadingActivity.hide(success: true, animated: true)
+                            self.networkErrorView.hidden = true
                     }
                 }
                 else{
                     EZLoadingActivity.hide(success: false, animated: true)
+                    self.networkErrorView.hidden = false
                 }
         });
         task.resume()
     }
+    
     
     override func viewDidAppear(animated: Bool) {
     }
