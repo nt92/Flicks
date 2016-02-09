@@ -106,12 +106,12 @@ class TopRatedMoviesViewController: UIViewController, UICollectionViewDataSource
                             self.filteredMovies = self.movies
                             self.collectionView.reloadData()
                             EZLoadingActivity.hide(success: true, animated: true)
-                            networkErrorView.hidden = true
+                            self.networkErrorView.hidden = true
                     }
                 }
                 else{
                     EZLoadingActivity.hide(success: false, animated: true)
-                    networkErrorView.hidden = false
+                    self.networkErrorView.hidden = false
                 }
         });
         task.resume()
